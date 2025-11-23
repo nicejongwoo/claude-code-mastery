@@ -1,10 +1,10 @@
 # 클로드 코드 프로젝트 가이드
 
-이 프로젝트는 **Expo 기반 React Native 앱 개발**을 위한 클로드 코드 워크플로우를 설정한 가이드 프로젝트입니다.
+이 프로젝트는 **클로드 코드를 활용한 효율적인 개발 워크플로우**를 설정한 가이드 프로젝트입니다.
 
 ## 프로젝트 개요
 
-이 프로젝트는 클로드 코드(Claude Code)를 사용하여 Expo React Native 애플리케이션을 효율적으로 개발하기 위한 구조를 제공합니다. 세 개의 전문화된 서브 에이전트가 설정되어 있어 UI 개발, 기능 구현, 최종 검수를 각각 담당합니다.
+이 프로젝트는 클로드 코드(Claude Code)를 사용하여 소프트웨어 개발 프로젝트를 효율적으로 진행하기 위한 구조를 제공합니다. 세 개의 전문화된 서브 에이전트가 설정되어 있어 UI 개발, 기능 구현, 최종 검수를 각각 담당합니다.
 
 ## 빠른 시작
 
@@ -30,9 +30,9 @@ claude
 
 이 에이전트는 다음 작업을 담당합니다:
 - `components/` 디렉토리에 재사용 가능한 UI 컴포넌트 생성
-- Expo Router 라우트 구조에 맞는 화면 UI 구성
-- `constants/theme.ts`의 중앙 집중식 색상 및 글꼴 사용
-- 필요시 `.ios.ts`, `.android.ts`, `.web.ts` 파일 확장자로 플랫폼별 UI 구현
+- 화면 UI 레이아웃 구성
+- 중앙 집중식 색상 및 글꼴 정의 사용
+- 필요시 플랫폼별 UI 구현
 
 **언제 사용하나요?**
 - "회원가입 화면 UI를 만들어줘"
@@ -98,48 +98,26 @@ UI 개발과 기능 구현이 모두 완료된 후, 이 에이전트는 다음�
 
 ```
 .
-├── app/                      # Expo Router 라우트
-│   ├── _layout.tsx          # 루트 레이아웃 (테마 제공자)
-│   ├── (tabs)/              # 탭 기반 라우트
-│   └── modal.tsx            # 모달 라우트
+├── .claude/
+│   └── agents/              # 서브 에이전트 설정 파일
+│       ├── ui-component-builder.md
+│       ├── feature-implementer.md
+│       └── final-review-coordinator.md
 ├── components/              # 재사용 가능한 UI 컴포넌트
-│   ├── themed-text.tsx
-│   ├── themed-view.tsx
-│   └── ui/                  # 기본 UI 요소
-├── hooks/                   # 사용자 정의 React 훅
-│   ├── use-color-scheme.ts
-│   └── use-theme-color.ts
-├── constants/               # 전역 상수
-│   └── theme.ts            # 색상 및 글꼴 정의
+├── hooks/                   # 사용자 정의 훅
+├── constants/               # 전역 상수 정의
 ├── CLAUDE.md               # 클로드 코드 프로젝트 지침
 └── README.md               # 본 파일
 ```
 
-## 개발 명령어
-
-프로젝트가 준비되면 다음 명령어를 사용할 수 있습니다:
-
-```bash
-# 앱 실행
-npm start              # Expo 개발 서버 시작
-npm run ios           # iOS 시뮬레이터에서 실행
-npm run android       # Android 에뮬레이터에서 실행
-npm run web           # 웹에서 실행
-
-# 코드 품질 검사
-npm run lint          # ESLint 실행
-
-# 프로젝트 초기화
-npm run reset-project # 시작 코드를 app-example/로 이동
-```
 
 ## 주요 규칙
 
-- **경로 별칭**: `@/*`를 사용하여 프로젝트 루트에서 임포트 (예: `@/components/themed-text`)
-- **테마 관리**: `constants/theme.ts`의 중앙 집중식 색상과 글꼴 사용
-- **플랫폼별 코드**: `.ios.ts`, `.android.ts`, `.web.ts` 확장자로 플랫폼별 구현
-- **TypeScript**: 엄격 모드 준수, 명시적 타입 정의
-- **테마 인식 컴포넌트**: `ThemedText`, `ThemedView` 사용으로 자동 테마 적용
+- 파일 및 디렉토리 구조를 명확하게 유지합니다
+- 재사용 가능한 컴포넌트를 중심으로 설계합니다
+- 중앙 집중식 설정(테마, 상수 등)을 활용합니다
+- TypeScript를 사용하여 타입 안정성을 보장합니다
+- 명확한 역할 분리로 코드 유지보수성을 높입니다
 
 ## 서브 에이전트 설정 방법
 
@@ -151,29 +129,7 @@ npm run reset-project # 시작 코드를 app-example/로 이동
 
 ## MCP 통합 (선택사항)
 
-필요에 따라 MCP(Model Context Protocol) 서버를 추가할 수 있습니다:
-
-### Playwright MCP 설치
-
-```bash
-# 서버 설치
-npm install -g @executeautomation/playwright-mcp-server
-
-# Claude Code에 추가 (현재 프로젝트만)
-claude mcp add playwright -- npx @executeautomation/playwright-mcp-server
-
-# 모든 프로젝트에서 사용하려면
-claude mcp add playwright -s user -- npx @executeautomation/playwright-mcp-server
-```
-
-### Figma Remote MCP 설치
-
-```bash
-# Figma MCP 추가
-claude mcp add --transport http figma https://mcp.figma.com/mcp
-```
-
-그 후 Claude Code를 재시작하고 `/mcp` 명령으로 Figma 인증을 진행하세요.
+필요에 따라 MCP(Model Context Protocol) 서버를 추가할 수 있습니다. Claude Code에서 `/mcp` 명령으로 MCP 서버를 관리할 수 있습니다.
 
 ## 참고
 
