@@ -98,6 +98,7 @@ Describe what this agent should do and when it should be used
   준비되면 얘기해 주세요.
 
 ### 서브 에이전트 설명 GPT 프롬프트 예시
+
 ```
 나는 react native expo 프로젝트에서 claude code를 통해 바이브 코딩을 하고 있어. 3가지 서브 에이전트를 생성할건데, description을 생성해줘.
 1. UI 관련 에이전트,
@@ -106,3 +107,38 @@ Describe what this agent should do and when it should be used
 
 Describe what this agent should do and when it should be used (be comprehensive for best results)
 ```
+
+## MCP
+
+### Playwright MCP 설정 1. Playwright MCP 서버 설치하기
+
+```
+npm install -g @executeautomation/playwright-mcp-server
+```
+
+2. Claude Code에 연결하기
+
+# 기본 연결 (현재 프로젝트에서만)
+
+```
+claude mcp add playwright -- npx @executeautomation/playwright-mcp-server
+
+# 모든 프로젝트에서 사용하려면
+
+claude mcp add playwright -s user -- npx @executeautomation/playwright-mcp-server
+```
+
+### Figma Remote MCP 설정
+
+1. Claude Code에 Figma MCP 추가
+
+```
+claude mcp add --transport http figma https://mcp.figma.com/mcp
+```
+
+2. Claude Code 재시작
+3. 인증 확인
+4. Claude Code에서 /mcp 명령 입력
+5. figma 선택
+6. "Authenticate" 선택
+7. "Allow Access" 클릭하여 Figma 계정 연결
