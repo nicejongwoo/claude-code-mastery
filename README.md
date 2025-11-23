@@ -1,50 +1,74 @@
-# Welcome to your Expo app 👋
+# Expo 앱에 오신 것을 환영합니다 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+이 프로젝트는 [`create-expo-app`](https://www.npmjs.com/package/create-expo-app)으로 생성된 [Expo](https://expo.dev) 프로젝트입니다.
 
-## Get started
+```expo 프로젝트 생성
+npx create-expo-app@latest claude-example 
+```
 
-1. Install dependencies
+## 시작하기
+
+1. 의존성 설치
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. 앱 시작
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+출력에서 다음 환경에서 앱을 열 수 있는 옵션을 찾을 수 있습니다.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- [개발 빌드](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android 에뮬레이터](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS 시뮬레이터](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), Expo로 앱 개발을 시도하기 위한 제한된 샌드박스
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+**app** 디렉토리 내의 파일을 편집하여 개발을 시작할 수 있습니다. 이 프로젝트는 [파일 기반 라우팅](https://docs.expo.dev/router/introduction)을 사용합니다.
 
-## Get a fresh project
+## 새 프로젝트 시작하기
 
-When you're ready, run:
+준비가 되면 다음 명령어를 실행하세요:
 
 ```bash
 npm run reset-project
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+이 명령어는 시작 코드를 **app-example** 디렉토리로 이동하고, 개발을 시작할 수 있는 빈 **app** 디렉토리를 생성합니다.
 
-## Learn more
+## 더 알아보기
 
-To learn more about developing your project with Expo, look at the following resources:
+Expo로 프로젝트를 개발하는 방법에 대해 더 알아보려면 다음 자료를 참고하세요:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- [Expo 문서](https://docs.expo.dev/): 기본 사항을 배우거나, [가이드](https://docs.expo.dev/guides)를 통해 고급 주제를 살펴보세요.
+- [Expo 튜토리얼 배우기](https://docs.expo.dev/tutorial/introduction/): Android, iOS, 웹에서 실행되는 프로젝트를 만드는 단계별 튜토리얼을 따라해보세요.
 
-## Join the community
+## 커뮤니티 참여
 
-Join our community of developers creating universal apps.
+범용 앱을 만드는 개발자 커뮤니티에 참여하세요.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [GitHub의 Expo](https://github.com/expo/expo): 오픈 소스 플랫폼을 보고 기여하세요.
+- [Discord 커뮤니티](https://chat.expo.dev): Expo 사용자들과 채팅하고 질문하세요.
+
+# 클로드 코드 활용 가이드
+
+## 바이브 코팅 상급 팁
+
+1. 무조건 스펙 먼저 작성하자
+2. 스펙은 여러 고급 모델끼리 토론시켜서 품질을 끌어 올리자
+3. 반드시 중간에 개입해서 AI의 방향성을 통제하고, 문맥을 이해하면서 명령하자
+4. AI는 주니어 개발자다.
+5. 비싼 모델을 설계/리뷰, 전용 코딩 모델은 구현하도록 위임하자. 적절한 역할 분리로 비용, 속도 품질을 모두 잡자
+
+## CLAUDE.md 작성하기
+
+```
+# 클로드 코드 접속
+claude
+
+# 초기화 명령어
+/init
+```
