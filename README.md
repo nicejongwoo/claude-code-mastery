@@ -18,6 +18,19 @@ claude
 /init
 ```
 
+## 권한
+### 권한 관리
+https://code.claude.com/docs/en/settings#permission-settings
+```
+/permissions
+Add a new rule...
+```
+- 클로드 코드에 Bash(npm run build) 처럼 도구명 + 괄호 () 형태로 권한을 부여할 수 있다.
+- 해당 도구에 모든 권한을 주고 싶을 경우 도구명만 입력한다. 예: Bash
+- .claude/settings.local.json 파일에 권한 설정이 저장된다.
+- permissions -> Workspace: 클로드코드가 현재 프로젝트 외부에 있는 다른 프로젝트 파일에 접근할 수 있는 권한을 부여한다.
+예) ../other-directory
+
 ## 서브에이전트 설정
 
 Create new agent
