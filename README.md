@@ -41,6 +41,13 @@ Add a new rule...
 - permissions -> Workspace: 클로드코드가 현재 프로젝트 외부에 있는 다른 프로젝트 파일에 접근할 수 있는 권한을 부여한다.
 예) ../other-directory
 
+## 세션 계속하기
+```
+claude --continue
+혹은
+/resume
+```
+
 ## 서브에이전트 설정
 
 Create new agent
