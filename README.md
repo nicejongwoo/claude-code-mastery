@@ -56,6 +56,17 @@ claude --continue
 claude
 shift + tab
 ```
+**bypassPermissions 모드(Safe YOLO mode)**: 클로드 코드가 권한 제한을 무시하고 작업을 수행하도록 허용(개발 환경에서만 안전하게 사용 권장)
+```
+claude --dangerouly-skip-permissions
+```
+
+## 확장 사고(ultra thinking)
+- 클로드 코드가 더 깊이 생각하고 복잡한 문제를 해결하도록 돕는 기능
+- 아래 키워드를 프롬프트와 함께 사용
+- think > think hard > think harder > ultrathink
+- UI 개선을 위해 이미지 파일을 올리면 더 좋은 결과 가능
+- dribble.com 사이트에서 벤치마킹 가능
 
 ## 서브에이전트 설정
 
