@@ -48,6 +48,15 @@ claude --continue
 /resume
 ```
 
+## 권한 모드
+- 클로드 코드가 기본적으로 어떻게 행동할지 결정하는 모드
+- https://code.claude.com/docs/ko/iam#권한-모드
+**plan 모드**: 클로드 코드가 작업을 수행하기 전에 계획을 세우도록 강제하기 때문에 중요하고 많이 사용하길 권장
+```
+claude
+shift + tab
+```
+
 ## 서브에이전트 설정
 
 Create new agent
