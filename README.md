@@ -110,6 +110,15 @@ claude --dangerouly-skip-permissions
 - /doctor: 클로드 코드 설치와 설정 문제 진단
 - /config: 현재 설정 확인 및 변경
 
+
+## 토큰 최적화 명령어(공식 문서 권장)
+- /clear: 불필요한 컨텍스트 제거 
+  - 새로운 기능을 추가할때는 무조건 사용 권장
+- /context: 현재 사용중인 메모리 확인
+  - context usage 가 70%가 넘어가지 않도록 확인 필요
+- /compact: 컨텍스트 압축
+
+
 ## 서브에이전트 설정
 
 Create new agent
