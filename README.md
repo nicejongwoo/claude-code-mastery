@@ -119,6 +119,32 @@ claude --dangerouly-skip-permissions
 - /compact: 컨텍스트 압축
 
 
+## 상태 표시줄 (status line)
+- https://code.claude.com/docs/ko/statusline
+- /statusline: statusline-setup
+- 기본적으로 ~/.claude/settings.json 파일에 설정이 저장된다.
+- 커스텀: /statusline + 프롬프트
+```
+예)
+/statusline 프로젝트, 모델명, git 브랜치를 컬러풀하게 이모지와 함께 표시해줘
+```
+
+## 출력 스타일 (output-style)
+- /output-style: 출력 스타일 설정
+- default, Explanatory, Learning
+- /output-style:new + 프롬프트: 커스텀 설정 가능
+  - ~/.claude/output-styles/junior-developer-education.md 처럼 저장됨
+```
+예)
+/output-style:new 주니어 개발자 교육 스타일.
+- 모든 개념을 ELI5(5살에게 설명하듯) 방식으로
+- 실생활 비유 사용
+- 단계별 설명(Step 1, 2, 3, ...)
+- 자주 하는 실수 예방 팁
+- 연습 문제 3개씩 제공
+```
+
+
 ## 서브에이전트 설정
 
 Create new agent
