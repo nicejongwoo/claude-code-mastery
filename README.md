@@ -145,6 +145,10 @@ claude --dangerouly-skip-permissions
 ```
 
 
+## 설정 파일 (settings.json)
+- https://code.claude.com/docs/ko/settings#설정-파일
+
+
 ## 서브에이전트 설정
 
 Create new agent
