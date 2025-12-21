@@ -149,6 +149,10 @@ claude --dangerouly-skip-permissions
 - https://code.claude.com/docs/ko/settings#설정-파일
 
 
+## 메모리 관리 (CLAUDE.md)
+- https://code.claude.com/docs/ko/memory
+
+
 ## 서브에이전트 설정
 
 Create new agent
