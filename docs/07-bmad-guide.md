@@ -58,7 +58,7 @@ git init
 기존 프로젝트가 있으면 해당 폴더로 이동하면 됩니다.
 이후 모든 명령은 **이 프로젝트 폴더** 안에서 실행합니다.
 
-### 1-3. BMAD 프레임워크 설치
+### 1-3. BMAD 설치
 
 **[터미널]** 프로젝트 폴더에서 실행합니다.
 
@@ -66,44 +66,25 @@ git init
 npx bmad-method install
 ```
 
-### 1-4. Claude Code와의 통합 설치
+이 명령어로 다음이 자동으로 생성됩니다:
+- `.claude/commands/` — Claude Code에서 사용할 슬래시 커맨드 파일들
+- `_bmad/` — BMAD의 워크플로우, 템플릿, 에이전트 정의 파일들
 
-BMAD를 Claude Code에서 직접 사용하려면 아래 단계를 추가로 진행합니다.
+### 1-4. Claude Code 시작
 
-**[터미널]** 순서대로 실행합니다.
-
-```bash
-# BMAD 저장소를 프로젝트 폴더의 옆에 클론
-git clone https://github.com/24601/BMAD-AT-CLAUDE.git
-
-# 통합 폴더로 이동
-cd BMAD-AT-CLAUDE/bmad-claude-integration
-
-# 종속성 설치
-npm install
-
-# Claude Code에 등록
-npm run install:local
-```
-
-### 1-5. 프로젝트 폴더로 복귀하고 Claude Code 시작
-
-**[터미널]** 원래 프로젝트 폴더로 돌아와서 Claude Code를 실행합니다.
+**[터미널]** 프로젝트 폴더에서 실행합니다.
 
 ```bash
-cd ../my-project
 claude
 ```
 
-Claude Code가 실행되면 아래 커맨드로 에이전트를 호출할 수 있습니다.
+Claude Code가 실행되면 `/bmad` 로 시작하는 커맨드가 사용 가능합니다.
+커맨드는 두 종류로 나뉩니다:
 
-| 커맨드 | 역할 |
-|--------|------|
-| `/bmad-pm` | Project Manager 에이전트 호출 |
-| `/bmad-architect` | Architect 에이전트 호출 |
-| `/bmad-dev` | Developer 에이전트 호출 |
-| `/bmad-sessions` | 활성 세션 목록 조회 |
-| `/bmad-switch <번호>` | 세션 전환 |
+| 패턴 | 설명 | 예시 |
+|------|------|------|
+| `/bmad-agent-bmm-<이름>` | 특정 에이전트를 직접 호출 | `/bmad-agent-bmm-pm` |
+| `/bmad-bmm-<작업>` | 특정 작업을 바로 실행 | `/bmad-bmm-create-prd` |
 
 설치가 완료되면 아래 **실습 1** 또는 **실습 2**로 넘어가면 됩니다.
 
@@ -179,20 +160,20 @@ BMAD는 10개의 전문화된 에이전트로 구성되어 있습니다.
 
 프로젝트의 목적과 맥락을 정리하는 첫 번째 단계입니다.
 
-**[Claude Code]** 아래 내용을 그대로 복사하여 붙여넣기 합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-프로젝트 브리프를 작성해주세요.
-
-프로젝트명: Todo List App
-대상 사용자: 직장인들이 매일 업무를 관리하는 앱
-핵심 기능: 할 일 추가/수정/삭제, 카테고리 분류, 우선순위 설정
-경쟁 참고: Todoist, TickTick
+/bmad-bmm-create-product-brief
 ```
 
-오케스트레이터가 자동으로 Analyst 에이전트로 라우팅되어 작업을 수행합니다.
+커맨드 실행 후 Claude가 질문을 해가며 프로젝트 브리프를 작성합니다.
+샘플로 아래와 같이 답변하면 됩니다:
 
-**생성되는 파일**: `프로젝트폴더/docs/project-brief.md`
+- 프로젝트명: **Todo List App**
+- 대상 사용자: **직장인들이 매일 업무를 관리하는 앱**
+- 핵심 기능: **할 일 추가/수정/삭제, 카테고리 분류, 우선순위 설정**
+
+**생성되는 파일**: `프로젝트폴더/docs/product-brief.md`
 
 ---
 
@@ -200,12 +181,14 @@ BMAD는 10개의 전문화된 에이전트로 구성되어 있습니다.
 
 프로젝트 브리프를 기반으로 제품 요구사항 문서를 생성합니다.
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-PRD를 작성해주세요.
-참조 문서: docs/project-brief.md
+/bmad-bmm-create-prd
 ```
+
+커맨드 실행 후 Claude가 기존 브리프를 참조하여 PRD를 작성합니다.
+생성, 검증, 편집 중 하나를 선택하는 단계가 나옵니다. 처음이면 **생성(Create)**을 선택합니다.
 
 **생성되는 파일**: `프로젝트폴더/docs/prd.md`
 
@@ -218,17 +201,18 @@ PRD에는 다음이 포함됩니다:
 
 ---
 
-### Step 3. 프론트엔드 스펙 작성 (UX Expert)
+### Step 3. UX 설계 (UX Expert)
 
 UI/UX 설계 방향을 정리합니다.
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-프론트엔드 스펙을 작성해주세요.
-참조 문서: docs/prd.md
-디자인 가이드라인: 간결하고 깔끔한 미니멀 디자인
+/bmad-bmm-create-ux-design
 ```
+
+커맨드 실행 후 Claude가 PRD를 참조하여 UX 설계를 진행합니다.
+디자인 가이드라인 등을 질문할 때 답변하면 됩니다.
 
 **생성되는 파일**: `프로젝트폴더/docs/front-end-spec.md`
 
@@ -238,18 +222,15 @@ UI/UX 설계 방향을 정리합니다.
 
 기술 스택과 시스템 구조를 설계합니다.
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
-(원하는 기술 스택을 직접 바꿔도 됩니다.)
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-아키텍처를 설계해주세요.
-참조 문서: docs/prd.md, docs/front-end-spec.md
-
-프론트엔드: React + TypeScript
-백엔드: Node.js + Express
-데이터베이스: PostgreSQL
-인증: JWT
+/bmad-bmm-create-architecture
 ```
+
+커맨드 실행 후 Claude가 PRD와 UX 설계를 참조하여 아키텍처를 설계합니다.
+기술 스택을 질문할 때 원하는 것을 답변하면 됩니다.
+예시: `프론트엔드: React + TypeScript, 백엔드: Node.js + Express, DB: PostgreSQL`
 
 **생성되는 파일**: `프로젝트폴더/docs/architecture.md`
 
@@ -262,37 +243,39 @@ UI/UX 설계 방향을 정리합니다.
 
 ---
 
-### Step 5. 문서 검증 및 분할 (PO)
+### Step 5. 에픽과 스토리 생성
 
-앞서 생성된 모든 문서를 검증하고, 개발 단계에 맞게 분할합니다.
+PRD와 아키텍처를 기반으로 에픽과 스토리를 생성합니다.
 
-**[Claude Code]** 먼저 검증을 실행합니다.
-
-```
-체클리스트를 실행하여 모든 문서를 검증해주세요.
-```
-
-검증이 완료되면 문서를 분할합니다.
-
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-shard docs/prd.md
-shard docs/architecture.md
+/bmad-bmm-create-epics-and-stories
 ```
 
-**생성되는 폴더 구조**:
+커맨드 실행 후 Claude가 PRD의 기능 요구사항을 에픽 단위로 분류하고, 각 에픽 안에 개발할 스토리를 생성합니다.
+
+**생성되는 파일**: `프로젝트폴더/docs/epics-and-stories.md`
+
+생성된 에픽과 스토리의 구조 예시:
 
 ```
-프로젝트폴더/docs/
-├── prd/
-│   ├── epic-1-core-todo-management.md
-│   ├── epic-2-category-priority.md
-│   └── epic-3-user-auth.md
-└── architecture/
-    ├── coding-standards.md
-    ├── tech-stack.md
-    └── source-tree.md
+Epic 1: 핵심 할 일 관리
+  - Story 1.1: 할 일 추가
+  - Story 1.2: 할 일 수정
+  - Story 1.3: 할 일 삭제
+
+Epic 2: 카테고리와 우선순위
+  - Story 2.1: 카테고리 분류
+  - Story 2.2: 우선순위 설정
+```
+
+문서가 클 경우 분할할 수 있습니다.
+
+**[Claude Code]** 아래 커맨드로 분할합니다.
+
+```
+/bmad-shard-doc docs/prd.md
 ```
 
 **분할이 중요한 이유**: Dev 에이전트가 전체 문서를 읽는 대신 필요한 에픽만 참조하면, 컨텍스트가 작아져서 응답이 빠르고 정확해집니다.
@@ -301,23 +284,24 @@ shard docs/architecture.md
 
 ### Step 6. 스토리 생성 (SM)
 
-여기서부터 **Step 6 ~ 9가 반복되는 구간**입니다.
+여기서부터 **Step 6 ~ 8이 반복되는 구간**입니다.
 각 스토리마다 이 과정을 한 번씩 반복하면 됩니다.
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-스토리를 생성해주세요.
+/bmad-bmm-create-story
 ```
 
-SM 에이전트가 자동으로 라우팅되어 첫 번째 스토리를 생성합니다.
+커맨드 실행 후 Claude가 에픽과 스토리 목록을 참조하여 다음 스토리를 생성합니다.
+스토리가 준비되면 바로 개발 가능한 상태로 표시됩니다.
 
 **생성되는 파일**: `프로젝트폴더/docs/stories/1.1.add-todo-item.md`
 
 생성된 스토리 파일의 구조:
 
 ```markdown
-## Status: Draft
+## Status: Ready for Dev
 
 ## Story
 As a 직장인, I want 할 일을 추가하기를, so that 업무를 체계적으로 관리할 수 있도록 합니다.
@@ -340,52 +324,35 @@ As a 직장인, I want 할 일을 추가하기를, so that 업무를 체계적�
 - 테스트: 유니트 테스트 + 통합 테스트 필수
 ```
 
-스토리를 검토한 후, 내용이 괜찮으면 승인합니다.
-
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
-
-```
-스토리를 승인해주세요.
-```
-
-스토리 상태가 `Draft` → `Approved`로 변경됩니다.
-
 ---
 
 ### Step 7. 스토리 구현 (Dev)
 
 개발자 에이전트가 스토리를 실제 코드로 구현합니다.
-**새로운 세션**을 시작해야 합니다. (Dev 에이전트는 별도 컨텍스트에서 작업하는 것이 정상입니다.)
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
-
-```
-/bmad-dev
-```
-
-Dev 에이전트가 활성화되면, 아래를 입력합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-docs/stories/1.1.add-todo-item.md 스토리를 구현해주세요.
+/bmad-bmm-dev-story
 ```
 
-Dev 에이전트는 스토리의 Acceptance Criteria와 Tasks를 기준으로 코드를 작성하고, 완료 후 스토리 파일에 결과를 기록합니다.
+커맨드 실행 후 Claude가 스토리 파일을 읽고, Acceptance Criteria와 Tasks를 기준으로 코드를 작성합니다.
+구현이 완료되면 스토리 파일에 결과를 기록합니다.
 
 ---
 
-### Step 8. 구현 리뷰 (QA)
+### Step 8. 코드 리뷰 (QA)
 
-QA 에이전트가 구현된 코드를 검토합니다.
-마찬가지로 **새로운 세션**에서 진행합니다.
+구현된 코드를 검토합니다.
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-docs/stories/1.1.add-todo-item.md 스토리를 리뷰해주세요.
+/bmad-bmm-code-review
 ```
 
-QA는 구현 내용을 검토하고 필요시 리팩토링을 제안합니다.
-스토리 상태가 `Done`으로 변경되면 이 스토리는 완료입니다.
+커맨드 실행 후 Claude가 구현된 코드를 검토하고, 필요시 리팩토링을 제안합니다.
+리뷰가 완료되면 이 스토리는 완료입니다.
 
 ---
 
@@ -409,7 +376,7 @@ git push
 모든 에픽의 스토리가 완료될 때까지 같은 과정을 진행합니다.
 
 ```
-SM(스토리 생성) → Dev(구현) → QA(리뷰) → 커밋 → 다음 스토리
+create-story → dev-story → code-review → 커밋 → 다음 스토리
 ```
 
 ---
@@ -455,15 +422,15 @@ npx bmad-method flatten
 
 프로젝트를 처음 본 경우, 먼저 기존 시스템을 문서화합니다.
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-기존 프로젝트를 분석하여 문서화해주세요.
+/bmad-bmm-document-project
 ```
 
-Architect 에이전트가 자동으로 라우팅되어 작업을 수행합니다.
+커맨드 실행 후 Claude가 프로젝트 코드를 분석하여 문서화합니다.
 
-**생성되는 파일**: `프로젝트폴더/docs/brownfield-architecture.md`
+**생성되는 파일**: `프로젝트폴더/docs/architecture.md`
 
 이 단계에서 정리되는 내용:
 - 현재 시스템 구조
@@ -477,19 +444,21 @@ Architect 에이전트가 자동으로 라우팅되어 작업을 수행합니다
 
 프로젝트를 잘 아는 경우, 바로 요구사항 작성을 시작합니다.
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
-(기존 기능과 추가할 기능을 직접 바꿔도 됩니다.)
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-기존 프로젝트에 새 기능을 추가하기 위한 PRD를 작성해주세요.
-
-기존 기능: 이메일/비밀번호 회원가입, 로그인
-추가할 기능: Google, Kakao OAuth 소셜 로그인
-영향받는 모듈: src/auth/, src/user-profile/
-호환 조건: 기존 회원 계정과 소셜 로그인 계정 연동 가능
+/bmad-bmm-create-prd
 ```
 
-**생성되는 파일**: `프로젝트폴더/docs/brownfield-prd.md`
+커맨드 실행 후 Claude가 질문을 해가며 PRD를 작성합니다.
+샘플로 아래와 같이 답변하면 됩니다:
+
+- 기존 기능: **이메일/비밀번호 회원가입, 로그인**
+- 추가할 기능: **Google, Kakao OAuth 소셜 로그인**
+- 영향받는 모듈: **src/auth/, src/user-profile/**
+- 호환 조건: **기존 회원 계정과 소셜 로그인 계정 연동 가능**
+
+**생성되는 파일**: `프로젝트폴더/docs/prd.md`
 
 ---
 
@@ -497,14 +466,15 @@ Architect 에이전트가 자동으로 라우팅되어 작업을 수행합니다
 
 기존 시스템과 새 기능이 어떻게 연동되는지 아키텍처를 설계합니다.
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-기존 시스템과의 통합 아키텍처를 설계해주세요.
-참조 문서: docs/brownfield-prd.md
+/bmad-bmm-create-architecture
 ```
 
-**생성되는 파일**: `프로젝트폴더/docs/brownfield-architecture.md` (갱신)
+커맨드 실행 후 Claude가 PRD를 참조하여 기존 시스템과의 통합 아키텍처를 설계합니다.
+
+**생성되는 파일**: `프로젝트폴더/docs/architecture.md` (갱신)
 
 통합 아키텍처에는 다음이 포함됩니다:
 - 기존 인증 흐름과의 연관 지점
@@ -514,23 +484,14 @@ Architect 에이전트가 자동으로 라우팅되어 작업을 수행합니다
 
 ---
 
-### Step 4. 문서 검증 (PO)
+### Step 4. 문서 분할
 
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
+문서가 클 경우 분할합니다.
 
-```
-통합 안전성과 기존 기능과의 호환성을 검증해주세요.
-```
-
----
-
-### Step 5. 문서 분할
-
-**[Claude Code]** 아래 내용을 복사하여 붙여넣기 합니다.
+**[Claude Code]** 아래 커맨드를 실행합니다.
 
 ```
-shard docs/brownfield-prd.md
-shard docs/brownfield-architecture.md
+/bmad-shard-doc docs/prd.md
 ```
 
 ---
@@ -673,25 +634,22 @@ Analyst → PM → UX Expert → Architect → PO (검증+분할) → SM → Dev
 
 | 상황 | 어디서 | 무엇을 입력 |
 |------|--------|------------|
-| 신규 프로젝트 시작 | Claude Code | `*workflow greenfield-fullstack` |
-| 기존 프로젝트 유지보수 | Claude Code | `*workflow brownfield-fullstack` |
+| 프로젝트 브리프 생성 | Claude Code | `/bmad-bmm-create-product-brief` |
+| PRD 생성 | Claude Code | `/bmad-bmm-create-prd` |
+| UX 설계 | Claude Code | `/bmad-bmm-create-ux-design` |
+| 아키텍처 설계 | Claude Code | `/bmad-bmm-create-architecture` |
+| 에픽과 스토리 생성 | Claude Code | `/bmad-bmm-create-epics-and-stories` |
+| 스토리 생성 | Claude Code | `/bmad-bmm-create-story` |
+| 스토리 구현 | Claude Code | `/bmad-bmm-dev-story` |
+| 코드 리뷰 | Claude Code | `/bmad-bmm-code-review` |
+| 문서 분할 | Claude Code | `/bmad-shard-doc <파일경로>` |
+| 시스템 문서화 | Claude Code | `/bmad-bmm-document-project` |
 | 코드베이스 평탄화 | 터미널 | `npx bmad-method flatten` |
-| PM 에이전트 호출 | Claude Code | `/bmad-pm` |
-| Architect 에이전트 호출 | Claude Code | `/bmad-architect` |
-| Dev 에이전트 호출 | Claude Code | `/bmad-dev` |
-| 문서 검증 | Claude Code | `체클리스트를 실행하여 문서를 검증해주세요.` |
-| 문서 분할 | Claude Code | `shard <파일경로>` |
-| 시스템 문서화 | Claude Code | `기존 프로젝트를 분석하여 문서화해주세요.` |
 
-### 디버그
+### 도움말
 
-**[터미널]** 아래 명령으로 디버그 모드를 실행할 수 있습니다.
+**[Claude Code]** BMAD 사용 방법을 확인하려면:
 
-```bash
-# 디버그 모드 실행
-DEBUG=bmad:* npm run install:local
-
-# 테스트 실행
-npm test
-npm run test:ai
+```
+/bmad-help
 ```
